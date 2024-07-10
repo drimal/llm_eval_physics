@@ -4,6 +4,7 @@ from llm_eval_physics.config import ModelConfig
 from llm_eval_physics.generator import generate
 from llm_eval_physics.message_builder import MessageBuilder
 from llm_eval_physics.utils import encode_image
+import argparse
 import json
 from dataclasses import asdict
 from llm_eval_physics.utils import load_prompt_templates
@@ -15,24 +16,37 @@ logging.basicConfig(
     encoding='utf-8',
     level=logging.DEBUG)
 
+def parse_arguements():
+    parser = argparse.ArguementParser()
+    #parser.add_arguement('-p', '--provider', required=True, type=str, help="Model Provider")
+    parser.add_arguement('-m', '--model', required=True, type=str, help="Model ID (model name)")
+    
+    args = parser.parse_args()
 
-def main():
+    print("input args:\n", json.dumps(vars(args), indent=8, separators=(",", ":")))
+    return args
+    
+
+def main(args):
     prompts = load_prompt_templates()
     system_prompt = prompts.get("system_prompt")
     mcq_prompt = prompts.get("mcq_question_prompt")
     general_prompt = prompts.get("general_question_prompt")
-    # model_provider = "aws"
+    modelId = args.model
+    if modelId in ['gemini-1.0-pro-latest']:
+        model_provider = "google"
+    elif modelId in ['gpt-4o']:
+        model_provider = "openai"
+    else:
+        model_provider = "aws"
     # modelId = "meta.llama3-70b-instruct-v1:0"
     # modelId = "anthropic.claude-3-sonnet-20240229-v1:0"
     # modelId = "mistral.mixtral-8x7b-instruct-v0:1"
-    # model_provider = "openai"
     # modelId = "gpt-4o"
-    model_provider = "google"
-    modelId = "gemini-1.0-pro-latest"
+    #modelId = "gemini-1.0-pro-latest"
 
     llm_params = asdict(ModelConfig())
     print(llm_params)
-    cwd = os.getcwd()
     indir = f"../data/inputs/"
     outdir = "../data/outputs/"
     input_path = indir + "hseb12_modelqs.jsonl"
@@ -52,7 +66,6 @@ def main():
                 base64_strings.append(encode_image(image))
 
         f.write(f"### Question: {full_question}\n")
-        # model_name = "gemini-1.0-pro-vision-latest"
         builder = MessageBuilder(system_prompt, mcq_prompt, general_prompt)
         messages = builder.create_messages(
             result["qtype"], full_question, images)
@@ -79,6 +92,6 @@ def main():
     f.close()
     os.system(f"mdpdf -o {output_fname.replace('.md', '.pdf')} {output_fname}")
 
-
 if __name__ == "__main__":
-    main()
+    args = parse_arguements()
+    main(args)
