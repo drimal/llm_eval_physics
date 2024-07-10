@@ -32,8 +32,8 @@ def main():
 
     llm_params = asdict(ModelConfig())
     print(llm_params)
-
-    indir = "../data/inputs/"
+    cwd = os.getcwd()
+    indir = f"../data/inputs/"
     outdir = "../data/outputs/"
     input_path = indir + "hseb12_modelqs.jsonl"
     images_dir = "../data/figures/"

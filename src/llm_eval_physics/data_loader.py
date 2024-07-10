@@ -1,19 +1,11 @@
 import json
 from typing import Dict, Any
 
-def read_jsonl(path: str) -> Dict[Any]:
+def read_jsonl(path: str):
     with open(path, encoding='utf-8') as jnf:
         results = []
         for line in jnf:
-            if line is None:
-                continue
-            try:
-                results.append(json.loads(line) if line != "null" else line)
-            except Exception as e:
-                print(e)
-                print(path)
-                print(line)
-                raise e
+            results.append(json.loads(line))
         return results
 
 def prepare_question(question_dict):
