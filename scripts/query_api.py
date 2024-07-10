@@ -38,7 +38,6 @@ def main():
     input_path = indir + "hseb12_modelqs.jsonl"
     images_dir = "../data/figures/"
     input_data = read_jsonl(input_path)
-    questions = []
     output_fname = f"{outdir}/{modelId}_solutions_v2.md"
     f = open(output_fname, "w")
     f.write("# Answers Written by AI\n")
