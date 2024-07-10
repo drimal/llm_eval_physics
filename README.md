@@ -8,6 +8,6 @@ In this repository, we are evaluating different llms on various physics problem 
 - ``` poetry install .```
 
 ## To run 
-- scripts/query_api.py 
+- ```python scripts/query_api.py```
 
 
