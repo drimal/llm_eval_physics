@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>example.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<p>Circle the best alternative to the following questions. (11×1 = 11)</p>
+<ol>
+<li>A metre rule is used to measure the length of a piece of string in a certain
+experiment. It is found to be 20 cm long to the nearest millimeter. How should
+this result be recorded in a table of results?
+(a) 0.2000m (b) 0.200m (d) 0.20m (d) 0.2m</li>
+<li>Forces are applied to a rigid body. The forces all act in the same plane. In which diagram
+is the body in equilibrium?
+(a) (b) (c) (d)
+2F 2F
+F F F F
+F F F F
+2F 2F</li>
+<li>An athlete makes a long jump and follows a projectile motion. Air resistance is negligible. Which one of the following statements is true about the athlete?</li>
+</ol>
+<p><img src="../data/1011Physics_page1_img0.png" alt="Image 0"></p>
+<p><img src="../data/1011Physics_page1_img1.png" alt="Image 1"></p>
+<p>(a) The athlete has a constant horizontal and vertical velocities.
+(b) The athlete has a constant horizontal velocity and constant downward acceleration.
+(c) The athlete has a constant upward acceleration followed by a constant downward
+acceleration.
+(d) The athlete has a constant upward velocity followed by a constant downward velocity.
+4. At Kulekhani-I Hydro-power station, water flows from
+Indra Sarowar into the turbines that are a vertical
+distance of 550 m below the lake, as shown in the
+diagram. Generally, 780 000kg of water flows into the
+turbines every minute. The turbines have the
+efficiency of 85%. What is the output power of the
+turbines?
+(a) 71 MW (b) 60MW (c) 4.2 GW (d) 3.6 GW
+5. Graphs of stress-strain for four different materials are shown below. Which graph
+represents the stiffest material?
+Str Str
+Str Str
+ess es
+es es
+s
+s s
+Strain
+Strain Strain Strain
+(a) (b) (c) (d)
+6. A boy walks towards a stationary plane mirror at a speed of 1.2 ms-1. What is the relative
+speed of approach of the boy and his image?
+(a) zero (b) 1.2 ms-1 (c) 2.4 ms-1 (d) 1.44 ms-1
+7. The critical angle between an equilateral prism and air is 45o. What happens to the
+incident ray perpendicular to the refracting surface?
+(a) It is reflected totally from the second surface and emerges perpendicular from the
+third. surface.
+(b) It gets reflected from second and third surfaces and emerges from the first surface
+(c) It keeps reflecting from all the three sides of the prism and never emerges out.
+(d) After deviation, it gets refracted from the second surface.
+8. In the formation of a rainbow, the light from the sun on water droplets undergoes which of
+the following phenomenonphenomena?
+Source : Curriculum Development Centre, Sanothimi, Bhaktapur</p>
+<p><img src="../data/1011Physics_page2_img0.png" alt="Image 0"></p>
+<p>(a) dispersion only (b) only total reflection.
+(c) dispersion and total internal reflection (d) scattering
+9. In what unit is the power of lens measured?
+(a) watt (b) metre (c) dioptre (d) Hertz
+10. A piece of wire of resistance R is bent through 180o at mid-point and the two halves are
+twisted together. What is the resistance of the wire thus formed?
+(a) R/4 (b) R/2 (c) R (d) 2R
+11. What are the elementary particles with half spin called?
+(a) quarks (b) bosons (c) fermions (d) hadrons
+Group 'B'
+Answer the following questions. (8 × 5 = 40)</p>
+<ol>
+<li>(a) State the law of conservation of momentum. [2]
+(b) A jumbo jet of mass 4 x105 kg travelling at a speed of 5000 m/s lands on the airport. It
+takes 2 minutes to come to rest. Calculate the average force applied by the ground on
+the aeroplane. [2]
+(c) After landing the aeroplane's momentum becomes zero. Explain how the law of
+conservation holds here. [1]
+OR
+(a) State Hook’s law. [2]
+(b) The walls of the tyres on a car are made of a rubber
+compound. The variation with stress of the strain of a
+specimen of this rubber compound is shown in Fig. 1.2.
+As the car moves, the walls of the tyres end and straighten
+continuously. Use Fig. 1.2 to explain why the walls of the Fig. 1.2.
+tyres become warm. [3]</li>
+<li>(a) What is meant by specific latent heat of vaporization of water = 2.26MJkg−1? [1]
+(b) A 1.0kW kettle contains 500g of boiling water. Calculate the time needed to
+evaporate all the water in the kettle. (Specific latent heat of vaporization of
+water = 2.26MJkg−1). [3]
+(c) Explain why the actual time needed is a little longer than the time calculated in
+2(b). [1]</li>
+<li>(a) Sate any three properties of an ideal gas as assumed by the kinetic theory of gas. [3]
+Source : Curriculum Development Centre, Sanothimi, Bhaktapur</li>
+</ol>
+<p><img src="../data/1011Physics_page3_img0.png" alt="Image 0"></p>
+<p>(b) A student needed to use the ideal gas for a certain experiment. But, the ideal gas does
+not exist. Suggest what two different things this student could do to solve his problem. [2]
+4. (a) Define temperature gradient in an object. [1]
+(b) An electric kitchen range has a total wall area of 1.40 m2 and is insulted with a layer of
+fiber glass that has a temperature of 175oC and its outside surface is 35 oC. The fiber
+glass has a thermal conductivity of 0.040 Wm-1K-1. Calculate the rate of flow of heat
+through the insulation, assuming the fibre as a flat slab of area of 1.40 m2. [3]
+(c) How might the rate of conduction be affected if the fiber absorbs moisture? Justify your
+answer. [1]
+5. Figure 5.1 shows a ray of light is entering and
+emerging through a part of a convex lens.
+Normal
+(i) Define ‘convex lens', and state one daily
+application of it. [2]
+(i) Explain why this lens is also called
+converging lens? 54o [1]
+(ii) Calculate the refractive index of the material
+32o
+of the lens shown in the figure.
+[2]
+Fig. 5.1
+OR
+(a) Define ‘concave mirror’ and state on daily application of it. [2]
+(b) A certain projector uses a concave mirror for
+projecting an object’s image on a screen. It
+produces an image that is 5 times bigger than
+the object and the screen is 5m away from the
+mirror as shown in Fig. 5.2.
+(i) Give reason why is the image larger than the object? [1]
+(ii) Calculate the focal length of the mirror. [2] Fig. 5.2
+6. (a) Sketch an electric field pattern around two identical negative point charges shown
+below. [2]
+-Q -Q
+X
+r r
+Fig. 6.1
+(b) Obtain an equation, in term s of Q and r, for the field strength at point X due to two
+charges shown in shown in Fig. 6.1 [3]
+7. (a) Define capacitance of a parallel plate capacitor and state one application of it in
+electric circuit.[2]
+Source : Curriculum Development Centre, Sanothimi, Bhaktapur</p>
+<p><img src="../data/1011Physics_page4_img0.png" alt="Image 0"></p>
+<p>(b) Three capacitors each of 1000μF are connected in an electric circuit as shown
+below.
+Y
+X
+Fig. 7.1
+(i) Identify the type of combination shown in Fig. 7.1, and calculate the effective
+capacitance of the combination. [1+2]
+8. (a) What is it meant by power of a heater is 2 kW? [1]
+(b) Calculate the resistance of the above mentioned heater when it is connected to 220V
+source. [2]
+(c) Suggest what changes must be done to the heater so that it gives more heat. Justify your
+answer. [2]
+Group 'C'
+Give long answer to the following questions. (3 × 8 = 24)
+9. A box at rest is accelerated by a rope attached with a motor as shown in the Fig
+2.1. The velocity-time graph given below shows the pattern of its motion for 20 s.
+(a) If the box is pulled with constant unbalanced force 10N. Show that the
+initial acceleration of the box is 2.5 ms-2, and calculate its mass. [2+1]
+(b) After 2.0 second the box is being pulled by a constant force 12 N.
+Determine the size of frictional forces acting on the box at this time. [2]
+(c) Determine the distance of the box travels along the ground at 8.0s. [3]
+Source : Curriculum Development Centre, Sanothimi, Bhaktapur</p>
+<p><img src="../data/1011Physics_page5_img0.png" alt="Image 0"></p>
+<ol start="10">
+<li>A boy is operating a remote-controlled toy car on a horizontal circular track, as
+shown in Figure.
+The track has a radius of 1·8 m and the car travels around the track with a
+constant speed.
+Fig. 10.1
+(i) Explain why the car is accelerating, even though it is travelling at a constant
+speed. [2]
+(ii) The car has a mass of 0·50 kg. The boy now increases the speed of the car
+to 6·0 m s -1. The total radial friction between the car and the track has a
+maximum value of 7.0 N.
+Show by calculation that the car cannot continue to travel in a circular path. [3]
+(iii) The car is now placed on a track, which includes a raised section. This is
+shown in Figure 10.2
+The raised section of the track can
+be considered as the arc of a circle,
+which has radius r of 0·85 m. The
+0.85
+car will lose contact with the raised
+m m
+section of track if its speed is
+greater than v max. Show that v max is Fig. 10.2
+given by the relationship v =
+max
+𝑟𝑔 . [3]
+OR
+Juno is a NASA orbiter with a
+mission to survey Jupiter. It is
+in an elliptical orbit around
+Jupiter as shown in the figure
+below.
+The gravitational potential at point A in the orbit of Juno is -1·70 × 109 J kg-1.
+Source : Curriculum Development Centre, Sanothimi, Bhaktapur</li>
+</ol>
+<p><img src="../data/1011Physics_page6_img0.png" alt="Image 0"></p>
+<p><img src="../data/1011Physics_page6_img1.png" alt="Image 1"></p>
+<p><img src="../data/1011Physics_page6_img2.png" alt="Image 2"></p>
+<p><img src="../data/1011Physics_page6_img3.png" alt="Image 3"></p>
+<p>(a) State what is meant by a gravitational potential at point A is -1·70 × 109 J
+kg-1. [2]
+(b) At point B, Juno is 1·69 × 108 m from the centre of Jupiter. If the mass if
+Jupiter is 1.90 1027 kg, calculate the gravitational potential at point B. [3]
+(c) The mass of Juno is 1·6 × 103 kg. Determine the change in gravitational potential
+energy if Juno moves from Point A to Point B. [3]
+11. (a) Explain how Rutherford’s -scattering experiment suggested that the nucleus of an
+atom is very small, very dense and positively charged. [3]
+(b) Considering that the -particles carry average kinetic energy of 2.00 x 1010 J,
+calculate the maximum size of the gold nucleus. [Atomic number of gold is 79 and
+e= 1.60 x 10-19C] [3]
+(c) Explain why the radius of the gold nucleus must be much smaller than the value
+calculated in 11(b) above. [2]
+K U A H
+MCQ 2 5 3 1
+SAQ 2+3+1+2+2=10 1+1+2+1=5 3+3+2+2=10 2+1+1+2+1+3+3+2=15
+LAQ 3+2+3=8 2+3+3=8 3+3+2=8
+Total 12 18 21 24
+Mechanics Heat &amp; Waves and Electricity &amp; Modern
+Thermodynamics optics Magnetism Physics
+MCQ 5 (5) 0 4 1 1 (1)
+SAQ 1 (5) 3 (15) 1 (5) 3 (15) 0
+LAQ 2 (16) 0 0 0 1 (8)
+Total 26 15 9 16 9
+Source : Curriculum Development Centre, Sanothimi, Bhaktapur</p>
+
+</body>
+</html>

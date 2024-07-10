@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "llm-eval-physics"
+version = "0.1.0"
+description = ""
+authors = ["drimal <rimaldipak@gmail.com>"]
+readme = "README.md"
+packages = [{include = "llm_eval_physics", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+black = "^24.4.2"
+ruff = "^0.4.4"
+pytest = "^8.2.0"
+pre-commit = "^3.7.1"
+pypdf = "^4.2.0"
+poetry-dotenv-plugin = "^0.2.0"
+google-generativeai = "^0.5.4"
+pandoc = "^2.3"
+meta-ai-api = "^1.1.7"
+autopep8 = "^2.1.1"
+anthropic = "^0.28.0"
+replicate = "^0.26.0"
+boto3 = "^1.34.122"
+tiktoken = "^0.7.0"
+jupyter = "^1.0.0"
+mpdf = "^1.0"
+openai = "^1.35.10"
+mdpdf = "^0.0.18"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,8 @@
+prompts:
+    version:
+        1.0.0:
+            system_prompt: "You are an excellent under-graduate level physics student preparing for the grade 11 board exam of the higher secondary education board of Nepal. "
+
+            mcq_question_prompt: "Choose the correct answer for the following question. Only respond with your pick for the correct answer.\n"
+
+            general_question_prompt: "Answer the following question including sub-problems. Your answer should be concise but must include your logic and reasoning on how you reached the solution. Respond with the question number, sub-question number and your answer in markdown format. Any equations within your answer must be enclosed between two $$ signs and must be in the markdown compatible format. \n"
