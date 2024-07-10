@@ -8,4 +8,6 @@ __pycache__/
 *.txt
 *.ipynb
 *.md
+*.html
+*.png
 
