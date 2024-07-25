@@ -1,14 +1,15 @@
 import os
-from llm_eval_physics.data_loader import read_jsonl, prepare_question
-from llm_eval_physics.config import ModelConfig
-from llm_eval_physics.generator import generate
-from llm_eval_physics.message_builder import MessageBuilder
-from llm_eval_physics.utils import encode_image
+from llm_eval_physics import read_jsonl, prepare_question
+from llm_eval_physics import ModelConfig
+from llm_eval_physics import generate
+from llm_eval_physics import MessageBuilder
+from llm_eval_physics import encode_image
 import argparse
 import json
 from dataclasses import asdict
 from llm_eval_physics.utils import load_prompt_templates
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -17,9 +18,10 @@ logging.basicConfig(
     level=logging.DEBUG)
 
 def parse_arguements():
-    parser = argparse.ArguementParser()
-    #parser.add_arguement('-p', '--provider', required=True, type=str, help="Model Provider")
-    parser.add_arguement('-m', '--model', required=True, type=str, help="Model ID (model name)")
+    available_models = ["meta.llama3-1-70b-instruct-v1:0","meta.llama3-70b-instruct-v1:0", "mistral.mixtral-8x7b-instruct-v0:1", "gemini-1.0-pro-latest", 'gpt-4o']
+    parser = argparse.ArgumentParser()
+    #parser.add_argument('-p', '--provider', required=True, type=str, help="Model Provider")
+    parser.add_argument('-m', '--model', required=True, type=str, help=f"Model ID (model name) available models {available_models}")
     
     args = parser.parse_args()
 
@@ -54,7 +56,8 @@ def main(args):
     input_data = read_jsonl(input_path)
     output_fname = f"{outdir}/{modelId}_solutions_v2.md"
     f = open(output_fname, "w")
-    f.write("# Answers Written by AI\n")
+    f.write(f"# Answers Written by AI (Model: {modelId}) \n\n")
+    f.write(" ")
     for i, result in enumerate(input_data):
         print(f"Question: {i+1}\n")
         full_question, image_files = prepare_question(result)
@@ -65,7 +68,8 @@ def main(args):
                 image = images_dir + v
                 base64_strings.append(encode_image(image))
 
-        f.write(f"### Question: {full_question}\n")
+        f.write(f"**Question:** {full_question} \n\n")
+        f.write(" ")
         builder = MessageBuilder(system_prompt, mcq_prompt, general_prompt)
         messages = builder.create_messages(
             result["qtype"], full_question, images)
@@ -83,7 +87,8 @@ def main(args):
         #    system = system_prompt,
         #    messages=,model="claude-3-opus-20240229", **llm_params)
         # f.write(response.choices[0].message.content)
-        f.write(f"### Answer: {response}\n")
+        f.write(f"**Answer:** {response} \n\n")
+        time.sleep(30)
         # f.write(response["message"])
 
     js_text1 = """<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
