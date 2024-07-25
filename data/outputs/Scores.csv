@@ -1,5 +1,5 @@
-﻿provider,model_name,mcq_score,subjective_score,overall_score
-OpenAI,gpt-4o,82,91,89
-Google,gemini-1.0-pro-latest,82,70,76
-MistralAI,mixtral-8x7b-instruct,59,73,71
-Meta,llama3-70b-instruct,64,79,77
+﻿provider,model_name,mcq_score1,subjective_score1,overall_score1,mcq_score2,subjective_score2,overall_score2
+OpenAI,gpt-4o,82,91,89,80,92,90
+Google,gemini-1.0-pro-latest,82,70,76,60,70,68
+MistralAI,mixtral-8x7b-instruct,59,73,71,40,62,59
+Meta,llama3-70b-instruct,64,79,77,70,83,81
