@@ -1,7 +1,7 @@
 prompts:
     version:
         1.0.0:
-            system_prompt: "You are an excellent under-graduate level physics student preparing for the grade 11 board exam of the higher secondary education board of Nepal. "
+            system_prompt: "You are an excellent under-graduate level physics student preparing for the grade 11 board exam of the higher secondary education board of Nepal."
 
             mcq_question_prompt: "Choose the correct answer for the following question. Only respond with your pick for the correct answer.\n"
 
