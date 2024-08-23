@@ -18,7 +18,7 @@ logging.basicConfig(
     level=logging.DEBUG)
 
 def parse_arguements():
-    available_models = ["meta.llama3-1-70b-instruct-v1:0","meta.llama3-70b-instruct-v1:0", "mistral.mixtral-8x7b-instruct-v0:1", "gemini-1.0-pro-latest", 'gpt-4o']
+    available_models = ["anthropic.claude-3-sonnet-20240229-v1:0", "meta.llama3-1-405b-instruct-v1:0", "mistral.mistral-large-2402-v1:0", "meta.llama3-1-70b-instruct-v1:0","meta.llama3-70b-instruct-v1:0", "mistral.mixtral-8x7b-instruct-v0:1", "gemini-1.0-pro-latest", 'gpt-4o']
     parser = argparse.ArgumentParser()
     #parser.add_argument('-p', '--provider', required=True, type=str, help="Model Provider")
     parser.add_argument('-m', '--model', required=True, type=str, help=f"Model ID (model name) available models {available_models}")
@@ -61,6 +61,7 @@ def main(args):
     for i, result in enumerate(input_data):
         print(f"Question: {i+1}\n")
         full_question, image_files = prepare_question(result)
+        print(full_question)
         images = []
         base64_strings = []
         if image_files:
@@ -88,7 +89,7 @@ def main(args):
         #    messages=,model="claude-3-opus-20240229", **llm_params)
         # f.write(response.choices[0].message.content)
         f.write(f"**Answer:** {response} \n\n")
-        time.sleep(30)
+        #time.sleep(60)
         # f.write(response["message"])
 
     js_text1 = """<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
