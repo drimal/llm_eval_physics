@@ -4,6 +4,9 @@ from meta_ai_api import MetaAI
 from dotenv import load_dotenv, find_dotenv
 from dataclasses import dataclass
 import boto3
+from botocore.config import Config
+
+config = Config(read_timeout=1000)
 
 import os
 _ = load_dotenv(find_dotenv())
@@ -39,5 +42,7 @@ def setup_Bedrock():
     client = boto3.client(service_name='bedrock-runtime',
                           aws_access_key_id=aws_access_key,
                           aws_secret_access_key=secret_key,
-                          region_name=aws_region)
+                          region_name=aws_region,
+                          config=config
+                          )
     return client

@@ -2,7 +2,7 @@ import json
 from llm_eval_physics.config import setup_Bedrock, setup_google, setup_openAI
 import tiktoken
 from typing import List, Any
-
+import time
 
 def get_num_tokens(prompt: str, encoding_name: str = "r50k_base")->int:
     """returns approximate number of tokens in the prompt 
@@ -55,7 +55,7 @@ def invoke_bedrock(
         max_token_param = "max_gen_len"
         model_outstring = "generation"
         if n_tokens > 8000:
-            prompt = prompt[:4000] + \
+            prompt = prompt[:8000] + \
                 "<|eot_id|><|start_header_id|>assistant<|end_header_id|>"
     elif "mistral" in modelId:
         max_token_param = "max_tokens"
@@ -100,20 +100,29 @@ def invoke_bedrock(
                 }
             ],
         })
-    model_response = client.invoke_model(
-        body=body,
-        modelId=modelId,
-        accept='application/json',
-        contentType='application/json')
-    response_body = json.loads(
-        model_response.get('body').read().decode('utf-8'))
-    if "anthropic.claude-3" in modelId:
-        resp = response_body['content'][0]['text']
-    elif "mistral" in modelId:
-        resp = response_body[model_outstring][0]['text']
-    else:
-        resp = response_body.get(model_outstring).strip()
-    return resp
+    retry_counter = 1
+    while retry_counter <= 5:
+        try:
+            model_response = client.invoke_model(
+                body=body,
+                modelId=modelId,
+                accept='application/json',
+                contentType='application/json')
+            response_body = json.loads(
+                model_response.get('body').read().decode('utf-8'))
+            if "anthropic.claude-3" in modelId:
+                resp = response_body['content'][0]['text']
+            elif "mistral" in modelId:
+                resp = response_body[model_outstring][0]['text']
+            else:
+                resp = response_body.get(model_outstring).strip()
+            return resp
+        except BaseException as e:
+            print(e)
+            time.sleep(60)
+            retry_counter += 1
+    return ""
+        
 
 
 def invoke_openai(client, modelId: str, model_config: dict, messages):
@@ -158,7 +167,7 @@ def generate(
             messages = format_llama_messages(messages)
         elif "anthropic" in modelId:
             messages = format_anthropic(messages)
-        elif "mixtral" in modelId:
+        elif "mistral" in modelId:
             messages = format_mistral(messages)
         return invoke_bedrock(
             client,
